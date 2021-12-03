@@ -36,19 +36,17 @@ const PostList = ({
 				{posts && !loading && (
 					<>
 						<Grid item xs={12} md={8}>
-							{page !== 'category' && (
-								<PostGrid
-									container
-									justifyContent='center'
-									sx={{ mt: 3 }}
-								>
-									<Typography variant='h4' color='gray'>
-										<Link href='/'>
-											<a>Recent Blogs</a>
-										</Link>
-									</Typography>
-								</PostGrid>
-							)}
+							<PostGrid
+								container
+								justifyContent='center'
+								sx={{ mt: 3 }}
+							>
+								<Typography variant='h4' color='gray'>
+									<Link href='/'>
+										<a>Recent Blogs</a>
+									</Link>
+								</Typography>
+							</PostGrid>
 							<PostGrid container>
 								{posts.map(post => (
 									<Post
@@ -65,12 +63,7 @@ const PostList = ({
 							</PostGrid>
 						</Grid>
 						<Grid item xs={12} sx={{ pt: 5, mt: 5 }}>
-							{page !== 'category' && (
-								<CategoryList
-									posts={posts}
-									uniqueCategories={uniqueCategories}
-								/>
-							)}
+							<CategoryList posts={posts} uniqueCategories={uniqueCategories} />
 						</Grid>
 					</>
 				)}

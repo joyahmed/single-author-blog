@@ -3,13 +3,14 @@ import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { useUser } from '@auth0/nextjs-auth0';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
-import CreatePostForm from '@/components/CreatePostForm';
+import CreatePostForm from '@/components/Forms/CreatePostForm';
 import axios from 'axios';
-import { Container, Typography } from '@mui/material';
-import { Grid } from '@mui/material';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
 import PostList from '@/components/PostList';
 import { styled } from '@mui/styles';
 import { kebabCase } from 'lodash';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const TypeGrid = styled(Grid)({
 	marginTop: '30px',
@@ -22,14 +23,15 @@ const PostContainer = styled(Container)({
 
 export default function Dashboard() {
 	const { user } = useUser();
+	console.log('user => ', user);
 
-	//const { data, error, loading } = useGetPosts();
 	// state
 	const [title, setTitle] = useState('');
 	const [content, setContent] = useState('');
 	const [image, setImage] = useState({});
 	const [category, setCategory] = useState('');
 	const [uploading, setUploading] = useState(false);
+	const [loading, setLoading] = useState(true);
 	// posts
 	const [posts, setPosts] = useState([]);
 
@@ -38,7 +40,8 @@ export default function Dashboard() {
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
 
-	// router
+	// list
+	const [disabled, setDisabled] = useState(false);
 	// router
 	const router = useRouter();
 
@@ -46,9 +49,18 @@ export default function Dashboard() {
 
 	const slug = encodeURI(kebabCase(title));
 
+	const page = 'admin';
+
+
+
 	useEffect(() => {
 		populatePosts();
 	}, []);
+
+	const handleList = event => {
+		setDisabled(true);
+		setCategory(event.target.value);
+	};
 
 	const postSubmit = async e => {
 		e.preventDefault();
@@ -82,7 +94,8 @@ export default function Dashboard() {
 		try {
 			const { data } = await axios.get('/api/posts');
 			setPosts(data);
-			console.log('dashboard=>', data);
+			setLoading(false);
+			//console.log('dashboard=>', data);
 		} catch (error) {
 			console.log(error);
 		}
@@ -108,7 +121,6 @@ export default function Dashboard() {
 		)
 			.then(resp => resp.json())
 			.then(data => {
-				console.log('uploaded image => ', data);
 				setImage({
 					url: data.url,
 					public_id: data.public_id
@@ -118,53 +130,54 @@ export default function Dashboard() {
 			.catch(err => console.log(err));
 	};
 
-	const handleDelete = async post => {
-		try {
-			const answer = window.confirm('Are you sure?');
-			if (!answer) {
-				return;
-			}
-			const { data } = await axios.delete(`/api/posts/${post._id}`);
-			console.log(data);
-			toast.error('Post deleted');
-			router.push('/dashboard');
-			populatePosts();
-		} catch (error) {
-			console.log(error);
-		}
-	};
-
 	return (
 		<>
-			<PostContainer>
-				{user &&
-					user[`${process.env.AUTH0_NAMESPACE}/roles`].includes(
-						'admin'
-					) && (
-						<CreatePostForm
-							title={title}
-							setTitle={setTitle}
-							slug={slug}
-							content={content}
-							setContent={setContent}
-							category={category}
-							setCategory={setCategory}
-							postSubmit={postSubmit}
-							handleImage={handleImage}
-							uploading={uploading}
-							image={image}
-							open={open}
-							setOpen={setOpen}
-							handleOpen={handleOpen}
-							handleClose={handleClose}
-						/>
-					)}
-				<PostList
-					posts={posts}
-					user={user}
-					handleDelete={handleDelete}
-				/>
-			</PostContainer>
+			{posts && !loading ? (
+				<PostContainer>
+					{user &&
+						user[`${process.env.AUTH0_NAMESPACE}/roles`].includes(
+							'admin'
+						) && (
+							<CreatePostForm
+								posts={posts}
+								handleList={handleList}
+								disabled={disabled}
+								title={title}
+								setTitle={setTitle}
+								slug={slug}
+								content={content}
+								setContent={setContent}
+								category={category}
+								setCategory={setCategory}
+								postSubmit={postSubmit}
+								handleImage={handleImage}
+								uploading={uploading}
+								image={image}
+								open={open}
+								setOpen={setOpen}
+								handleOpen={handleOpen}
+								handleClose={handleClose}
+							/>
+						)}
+					<PostList
+						posts={posts}
+						user={user}
+						page={page}
+						loading={loading}
+					/>
+				</PostContainer>
+			) : (
+				<Grid
+					container
+					sx={{ height: 100 + 'vh' }}
+					alignItems='center'
+					justifyContent='center'
+				>
+					<CircularProgress
+						sx={{ color: 'steelblue', height: 3 + 'em' }}
+					/>
+				</Grid>
+			)}
 		</>
 	);
 }

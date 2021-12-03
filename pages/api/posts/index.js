@@ -1,6 +1,5 @@
 import connectDB from '@/config/connectDB';
 import Posts from '@/models/postModel';
-import { getSession } from '@auth0/nextjs-auth0';
 
 connectDB();
 
@@ -10,7 +9,6 @@ export default async function handler(req, res) {
 	switch (req.method) {
 		case 'GET':
 			await getPosts(req, res);
-			await totalPosts(req, res);
 			break;
 
 		case 'POST':
@@ -22,7 +20,7 @@ export default async function handler(req, res) {
 
 const getPosts = async (req, res) => {
 	try {
-		const posts = await Posts.find().sort({ createdAt: -1 }).limit(5);
+		const posts = await Posts.find().sort({ createdAt: -1 });
 		res.json(posts);
 		//console.log(posts);
 	} catch (error) {
@@ -32,12 +30,16 @@ const getPosts = async (req, res) => {
 
 const createPost = async (req, res) => {
 	try {
-		/* 		const session = getSession(req, res);
-		const user = session.user;
-		console.log(user); */
-
 		const { title, slug, content, category, image } = req.body;
+
 		console.log(title, slug, content, category, image);
+
+		/* 		const categoryExists = await Posts.findOne({ category });
+		if (categoryExists) {
+			return res.json({
+				error: 'Category Exists!'
+			});
+		} */
 
 		const newPost = new Posts({
 			title: title,
@@ -51,14 +53,5 @@ const createPost = async (req, res) => {
 		await res.json({ msg: 'Success! Created a new post.' });
 	} catch (error) {
 		return res.status(500).json({ msg: error.message });
-	}
-};
-
-const totalPosts = async (req, res) => {
-	try {
-		const total = await Posts.find().estimatedDocumentCount();
-		res.json(total);
-	} catch (error) {
-		console.log(error);
 	}
 };

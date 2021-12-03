@@ -1,14 +1,20 @@
 import mongoose from 'mongoose';
 const { ObjectId } = mongoose.Schema;
 
-const upvoteSchema = new mongoose.Schema(
+const likeSchema = new mongoose.Schema(
 	{
-		upvoteBy: {
-			type: String
+		likedBy: {
+			name: String,
+			required: true
+		},
+		name: {
+			type: String,
+			required: true,
+			trim: true
 		}
 	},
 	{ timestamps: true }
 );
 
-export default mongoose.models.likes ||
-	mongoose.model('Likes', upvoteSchema);
+let Dataset =
+	mongoose.models.likes || mongoose.model('Likes', likeSchema);

@@ -7,6 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import Badge from '@mui/material/Badge';
+import Grid from '@mui/material/Grid';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -24,6 +25,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import PersonIcon from '@mui/icons-material/Person';
 import SettingsIcon from '@mui/icons-material/Settings';
 import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
 
 const Search = styled('div')(({ theme }) => ({
 	position: 'relative',
@@ -89,6 +91,7 @@ export default function NavBar() {
 			Logout
 		</a>
 	);
+
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
@@ -139,17 +142,9 @@ export default function NavBar() {
 			open={isMenuOpen}
 			onClose={handleMenuClose}
 		>
-			<MenuItem onClick={handleMenuClose}>Update Profile</MenuItem>
+			{/* 			<MenuItem onClick={handleMenuClose}>Update Profile</MenuItem> */}
 			<MenuItem onClick={handleMenuClose}>
-				{user ? (
-					<p>
-						<LogoutLink />
-					</p>
-				) : (
-					<p>
-						<LoginLink />
-					</p>
-				)}
+				<LogoutLink />
 			</MenuItem>
 		</Menu>
 	);
@@ -174,44 +169,53 @@ export default function NavBar() {
 			open={isMobileMenuOpen}
 			onClose={handleMobileMenuClose}
 		>
-			{user && (
+			{user &&
+			user['https://joy-portfolio.com/roles'] &&
+			user['https://joy-portfolio.com/roles'].includes('admin') ? (
 				<MenuItem>
-					<IconButton size='large' color='inherit'>
-						<SettingsIcon fontSize='small' />
-					</IconButton>
-					<p>Admin Dashboard</p>
+					<Button
+						className='navItem'
+						variant='text'
+						size='large'
+						style={{ backgroundColor: 'transparent' }}
+					>
+						{/* eslint-disable-next-line */}
+						<a className='navLink' href='/dashboard'>
+							<SettingsIcon fontSize='small' />{' '}
+							<span style={{ paddingLeft: '10px' }}>Dashboard</span>
+						</a>
+					</Button>
 				</MenuItem>
-			)}
-			<MenuItem onClick={handleProfileMenuOpen}>
-				<IconButton size='large' aria-haspopup='true' color='inherit'>
-					<PersonIcon fontSize='small' />
-				</IconButton>
-				<p> Update Profile</p>
-			</MenuItem>
+			) : null}
 			{user ? (
-				<LogoutLink style={{ width: '100%', display: 'block' }}>
-					<MenuItem>
-						<IconButton
-							size='large'
-							aria-haspopup='true'
-							color='inherit'
-						>
-							<LogoutIcon fontSize='small' />
-						</IconButton>
-					</MenuItem>
-				</LogoutLink>
+				<MenuItem>
+					<Button
+						className='navItem'
+						variant='text'
+						size='large'
+						style={{ backgroundColor: 'transparent' }}
+					>
+						{/* eslint-disable-next-line */}
+						<a className='navLink' href='/api/auth/logout'>
+							<LogoutIcon fontSize='small' />{' '}
+							<span style={{ paddingLeft: '10px' }}>Logout</span>
+						</a>
+					</Button>
+				</MenuItem>
 			) : (
 				<MenuItem>
-					<IconButton
+					<Button
+						className='navLink'
+						variant='text'
 						size='large'
-						aria-haspopup='true'
-						color='inherit'
+						style={{ backgroundColor: 'transparent' }}
 					>
-						<LoginIcon fontSize='small' />
-					</IconButton>
-					<p>
-						<LoginLink />
-					</p>
+						{/* eslint-disable-next-line */}
+						<a className='navLink' href='/api/auth/login'>
+							<LogoutIcon fontSize='small' />{' '}
+							<span style={{ paddingLeft: '10px' }}>Login</span>
+						</a>
+					</Button>
 				</MenuItem>
 			)}
 		</Menu>
@@ -220,41 +224,26 @@ export default function NavBar() {
 	// #endregion mobile menu
 
 	return (
+		// #region main menu render
 		<Box sx={{ flexGrow: 1 }}>
 			<AppBar
 				position='static'
-				style={{ color: 'white', boxShadow: 'none' }}
+				style={{
+					color: 'white',
+					boxShadow: 'none'
+				}}
 			>
 				<Toolbar>
-					<Link href='/'>
-						<a>
-							<Typography
-								variant='h6'
-								noWrap
-								component='div'
-								sx={{ ml: 1, mr: 4 }}
-							>
-								RB
-							</Typography>
-						</a>
-					</Link>
-					<Search>
-						<SearchIconWrapper>
-							<SearchIcon />
-						</SearchIconWrapper>
-						<StyledInputBase
-							sx={{
-								display: {
-									xs: 'none',
-									xs: 'flex',
-									alignItems: 'center'
-								}
-							}}
-							placeholder='Search…'
-							inputProps={{ 'aria-label': 'search' }}
-						/>
-					</Search>
-
+					<Typography
+						variant='h6'
+						noWrap
+						component='div'
+						sx={{ ml: 1, mr: 4 }}
+					>
+						<Link href='/'>
+							<a>RB</a>
+						</Link>
+					</Typography>
 					<Box sx={{ flexGrow: 1 }} />
 					<Box
 						sx={{
@@ -265,24 +254,40 @@ export default function NavBar() {
 							}
 						}}
 					>
-						{user ? (
-							<Typography
-								sx={{ display: { xs: 'none', sm: 'block' } }}
-							>
+						{user &&
+							user['https://joy-portfolio.com/roles'] &&
+							user['https://joy-portfolio.com/roles'].includes(
+								'admin'
+							) && (
 								<Link href='/dashboard'>
-									<a className='navLink'>Dashboard</a>
+									<a className='navLink'>
+										<Typography
+											sx={{
+												display: {
+													xs: 'none',
+													sm: 'block',
+													marginRight: 4 + 'px'
+												}
+											}}
+										>
+											Dashboard
+										</Typography>
+									</a>
 								</Link>
-							</Typography>
-						) : (
-							<Typography
-								sx={{ display: { xs: 'none', sm: 'block' } }}
-								style={{ marginRight: '30px' }}
-							>
-								<LoginLink />
-							</Typography>
+							)}
+						{!user && (
+							<Link href='/api/auth/login'>
+								<a>
+									<Typography
+										sx={{ display: { xs: 'none', sm: 'block' } }}
+										style={{ marginRight: '30px' }}
+									>
+										Login
+									</Typography>
+								</a>
+							</Link>
 						)}
-
-						{user && (
+						{user ? (
 							<>
 								<Typography
 									sx={{
@@ -307,34 +312,21 @@ export default function NavBar() {
 								>
 									<UserName title={user.name} />
 								</Typography>
+								<Typography
+									sx={{
+										display: {
+											xs: 'none',
+											sm: 'block'
+										}
+									}}
+								>
+									{/* eslint-disable-next-line */}
+									<a className='navLink' href='/api/auth/logout'>
+										<Box mr={2}>Logout</Box>
+									</a>
+								</Typography>
 							</>
-						)}
-						<IconButton
-							style={{ marginLeft: '-30px' }}
-							size='large'
-							edge='end'
-							aria-label='account of current user'
-							aria-controls={menuId}
-							aria-haspopup='true'
-							onClick={handleProfileMenuOpen}
-							color='inherit'
-						>
-							{user && (
-								<>
-									<Typography sx={{ minWidth: 50 }}>
-										<Tooltip title=''>
-											<IconButton
-												onClick={handleClick}
-												size='big'
-												sx={{ mr: 1, color: 'white' }}
-											>
-												<ArrowDropDownIcon onClick={handleClick} />
-											</IconButton>
-										</Tooltip>
-									</Typography>
-								</>
-							)}
-						</IconButton>
+						) : null}
 					</Box>
 					<Box sx={{ display: { xs: 'flex', md: 'none' } }}>
 						<IconButton

@@ -5,6 +5,7 @@ body {
 	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
 		Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
 		sans-serif;
+		height: 100vh;
 }
 
 a {
@@ -26,6 +27,33 @@ a {
 }
 
 .navLink {
-	display: inline-block;
+	display: flex;
+	align-items: center;
 	width: 100%;
+}
+
+.MuiInput-root:before,
+.MuiInput-root:after {
+	display: none;
+}
+
+.MuiOutlinedInput-root.MuiInputBase-root.MuiInputBase-colorPrimary.MuiInputBase-formControl.css-1vy6t9p-MuiInputBase-root-MuiOutlinedInput-root:hover {
+	outline: none !important;
+	border: none !important;
+}
+
+
+
+@media (min-width: 1200px) {
+	.css-1oqqzyl-MuiContainer-root {
+		max-width: 95%;
+	}
+}
+
+@media (max-width: 600px) {
+	.css-1oqqzyl-MuiContainer-root {
+		padding-left: 0;
+		padding-right: 0;
+		max-width: 90%;
+	}
 }

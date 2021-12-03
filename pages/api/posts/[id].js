@@ -58,11 +58,11 @@ const editPost = async (req, res) => {
 
 const deletePost = async (req, res) => {
 	try {
-		console.log('delete request');
+		//console.log('delete request');
 		const { id } = req.query;
 		const post = await Posts.findByIdAndDelete(id);
 
-		console.log(post.image)
+		//console.log(post.image);
 		if (post.image && post.image.public_id) {
 			const image = await cloudinary.v2.uploader.destroy(
 				post.image.public_id

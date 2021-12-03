@@ -21,10 +21,36 @@ const postSchema = new mongoose.Schema(
 		},
 		category: {
 			type: String,
-			required: true
+			required: true,
+			unique: true
 		},
-		comments: [{ type: ObjectId, ref: 'comments' }],
-		likes: [{ type: ObjectId, ref: 'likes' }]
+		comments: [
+			{
+				commentContent: {
+					type: String
+				},
+				created: { type: Date, default: Date.now },
+				commentBy: {
+					type: String
+				},
+				userImage: {
+					type: String
+				}
+			}
+		],
+		hearts: [
+			{
+				heartBy: {
+					type: String
+				},
+				userImage: {
+					type: String
+				},
+				userEmail: {
+					type: String
+				}
+			}
+		]
 	},
 
 	{ timestamps: true }

@@ -1,12 +1,12 @@
 import mongoose from 'mongoose';
-const { ObjectId } = mongoose.Schema;
 
 const commentSchema = new mongoose.Schema(
 	{
 		commentBy: {
-			type: String
+			type: String,
+			required: true
 		},
-		content: {
+		commentContent: {
 			type: String,
 			required: true
 		}
@@ -14,5 +14,8 @@ const commentSchema = new mongoose.Schema(
 	{ timestamps: true }
 );
 
-export default mongoose.models.likes ||
-	mongoose.model('Comments', commentSchema);
+let Dataset =
+	mongoose.models.comments ||
+	mongoose.model('comments', commentSchema);
+
+export default Dataset;
