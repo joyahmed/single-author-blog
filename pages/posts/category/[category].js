@@ -6,13 +6,10 @@ import PostDetail from '../../../components/PostDetail';
 import PostList from '../../../components/PostList';
 import { useState } from 'react';
 
-export default function PostByCategory({
-	posts,
-	category
-}) {
+export default function PostByCategory({ posts, category }) {
 	const [disabled, setDisabled] = useState(false);
 	//const cat = { category };
-	const page = 'category'
+	const page = 'category';
 	return (
 		<>
 			<Grid
@@ -32,7 +29,7 @@ export default function PostByCategory({
 
 export async function getServerSideProps({ params: { category } }) {
 	const response = await fetch(
-		`http://localhost:3000/api/posts/category/${category}`
+		`${process.env.AUTH0_BASE_URL}/api/posts/category/${category}`
 	);
 
 	const data = await response.json();
