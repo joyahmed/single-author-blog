@@ -16,6 +16,7 @@
 		"@mui/icons-material": "^5.2.0",
 		"@mui/material": "^5.2.0",
 		"@mui/styles": "^5.2.0",
+		"auth0": "^2.37.0",
 		"axios": "^0.24.0",
 		"cloudinary": "^1.27.1",
 		"clsx": "^1.1.1",
