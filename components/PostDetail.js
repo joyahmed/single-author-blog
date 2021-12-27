@@ -18,8 +18,8 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import HeartComponent from './HeartComponent';
 import EditPostForm from '@/components/Forms/EditPostForm';
 import Modal from '@mui/material/Modal';
+import Container from '@mui/material/Container';
 import { makeStyles } from '@mui/styles';
-
 
 const useStyles = makeStyles(theme => ({
 	wrapIcon: {
@@ -43,6 +43,11 @@ const style = {
 
 const PostFormGrid = styled(Grid)({
 	marginTop: '30px'
+});
+
+const PostContainer = styled(Container)({
+	marginTop: '30px',
+	maxWidth: '100%'
 });
 
 const PostDetail = ({
@@ -78,7 +83,7 @@ const PostDetail = ({
 	heart,
 	setHeart,
 	makeHeart,
-	removeComment,
+	removeComment
 }) => {
 	const { user } = useUser();
 
@@ -116,159 +121,162 @@ const PostDetail = ({
 			</Modal>
 
 			{post && (
-				<Grid container justifyContent='center'>
-					<Grid item xs={12} md={10} sx={{ mt: 10, mb: 10 }}>
-						<Grid item xs={12}>
-							<Typography variant='h4' color='secondary'>
-								Category : {post.category && post.category}
-							</Typography>
-						</Grid>
-
-						<Grid item xs={12} sx={{ pt: 1 }}>
-							<Typography variant='h3' color='steelblue'>
-								{post.title && post.title}
-							</Typography>
-						</Grid>
-
-						<Grid
-							container
-							justifyContent='flex-start'
-							sx={{ pt: 1 }}
-						>
-							<Box pr={2}>
-								<Typography>
-									<small>
-										{moment(post.createdAt).format('DD MMMM YYYY')}
-									</small>
+				<PostContainer justifyContent='center'>
+					<Grid container>
+						<Grid item xs={12} md={12} sx={{ mt: 10, mb: 10 }}>
+							<Grid item xs={12}>
+								<Typography variant='h4' color='secondary'>
+									Category : {post.category && post.category}
 								</Typography>
-							</Box>
+							</Grid>
 
-							<Box
-								pr={2}
-								sx={{ display: 'flex', alignItems: 'center' }}
-							>
-								<Typography className={classes.wrapIcon}>
-									<small style={{ paddingRight: '2px' }}>
-										{post && post.hearts && post.hearts.length}
-									</small>
-									<FavoriteIcon
-										size='small'
-										sx={{ color: 'red', fontSize: '1rem' }}
-										disabled={disabled}
-									/>
+							<Grid item xs={12} sx={{ pt: 1 }}>
+								<Typography variant='h3' color='steelblue'>
+									{post.title && post.title}
 								</Typography>
-							</Box>
-							<Box>
-								<Typography color='steelblue'>
-									<small>
-										{numberOfComments && numberOfComments} Comments
-									</small>
-								</Typography>
-							</Box>
-						</Grid>
+							</Grid>
 
-						<Grid item xs={12} sx={{ pt: 1 }}>
-							<Typography color='steelblue'>
-								{post.content && renderHTML(post.content)}
-							</Typography>
-						</Grid>
-
-						<Grid item xs={12} sx={{ pt: 1, pb: 1 }}>
-							{post.image && (
-								<CardMedia
-									sx={{ objectFit: 'cover' }}
-									component='img'
-									image={post.image.url}
-									alt={post.title}
-									width='100%'
-									height='auto'
-								/>
-							)}
-						</Grid>
-
-						<Grid
-							item
-							xs={12}
-							sx={{
-								pt: 1,
-								pb: 1,
-								display: 'flex',
-								alignItems: 'center'
-							}}
-						>
-							<HeartComponent
-								heartCount={heartCount}
-								heart={heart}
-								setHeart={setHeart}
-								makeHeart={makeHeart}
-								numberOfComments={numberOfComments}
-								post={post}
-								disabled={disabled}
-								setDisabled={setDisabled}
-							/>
-						</Grid>
-
-						<Grid item xs={12} sx={{ pt: 1, pb: 1 }}>
-							{post.comments && post.comments.length > 0 && (
-								<CommentsComponent
-									id={id}
-									post={post}
-									disabled={disabled}
-									commentBy={commentBy}
-									removeComment={removeComment}
-								/>
-							)}
-						</Grid>
-						<Grid item xs={12} sx={{ pt: 1, pb: 1 }}>
-							<CommentForm
-								commentBy={commentBy}
-								commentContent={commentContent}
-								setCommentContent={setCommentContent}
-								postComment={postComment}
-							/>
-						</Grid>
-
-						{user &&
-						user[`${process.env.AUTH0_NAMESPACE}/roles`].includes(
-							'admin'
-						) &&
-						post ? (
 							<Grid
 								container
+								justifyContent='flex-start'
+								sx={{ pt: 1 }}
+							>
+								<Box pr={2}>
+									<Typography>
+										<small>
+											{moment(post.createdAt).format('DD MMMM YYYY')}
+										</small>
+									</Typography>
+								</Box>
+
+								<Box
+									pr={2}
+									sx={{ display: 'flex', alignItems: 'center' }}
+								>
+									<Typography className={classes.wrapIcon}>
+										<small style={{ paddingRight: '2px' }}>
+											{post && post.hearts && post.hearts.length}
+										</small>
+										<FavoriteIcon
+											size='small'
+											sx={{ color: 'red', fontSize: '1rem' }}
+											disabled={disabled}
+										/>
+									</Typography>
+								</Box>
+								<Box>
+									<Typography color='steelblue'>
+										<small>
+											{numberOfComments && numberOfComments} Comments
+										</small>
+									</Typography>
+								</Box>
+							</Grid>
+
+							<Grid item xs={12} sx={{ pt: 1 }}>
+								<Typography color='steelblue'>
+									{post.content && renderHTML(post.content)}
+								</Typography>
+							</Grid>
+
+							<Grid item xs={12} sx={{ pt: 1, pb: 1 }}>
+								{post.image && (
+									<CardMedia
+										sx={{ objectFit: 'cover' }}
+										component='img'
+										image={post.image.url}
+										alt={post.title}
+										width='100%'
+										height='auto'
+									/>
+								)}
+							</Grid>
+
+							<Grid
 								item
 								xs={12}
-								style={{
-									justifyContent: 'center',
-									marginTop: '20px'
+								sx={{
+									pt: 1,
+									pb: 1,
+									display: 'flex',
+									alignItems: 'center'
 								}}
 							>
-								<ButtonGroup>
-									<Button
-										variant='contained'
-										size='large'
-										startIcon={<EditIcon />}
-										color='info'
-										onClick={handleOpen}
-									>
-										<Link href={`/posts/${post._id}`}>
-											<a>Edit Post</a>
-										</Link>
-									</Button>
-
-									<Button
-										variant='contained'
-										size='large'
-										endIcon={<DeleteIcon />}
-										color='error'
-										onClick={() => handleDelete(post)}
-									>
-										Delete Post
-									</Button>
-								</ButtonGroup>
+								<HeartComponent
+									heartCount={heartCount}
+									heart={heart}
+									setHeart={setHeart}
+									makeHeart={makeHeart}
+									numberOfComments={numberOfComments}
+									post={post}
+									disabled={disabled}
+									setDisabled={setDisabled}
+								/>
 							</Grid>
-						) : null}
+
+							<Grid item xs={12} sx={{ pt: 1, pb: 1 }}>
+								{post.comments && post.comments.length > 0 && (
+									<CommentsComponent
+										id={id}
+										post={post}
+										disabled={disabled}
+										commentBy={commentBy}
+										removeComment={removeComment}
+									/>
+								)}
+							</Grid>
+							<Grid item xs={12} sx={{ pt: 1, pb: 1 }}>
+								<CommentForm
+									commentBy={commentBy}
+									commentContent={commentContent}
+									setCommentContent={setCommentContent}
+									postComment={postComment}
+								/>
+							</Grid>
+
+							{user &&
+							user['https://rubas-blog.com/roles'] &&
+							user['https://rubas-blog.com/roles'].includes(
+								'admin'
+							) &&
+							post ? (
+								<Grid
+									container
+									item
+									xs={12}
+									style={{
+										justifyContent: 'center',
+										marginTop: '20px'
+									}}
+								>
+									<ButtonGroup>
+										<Button
+											variant='contained'
+											size='large'
+											startIcon={<EditIcon />}
+											color='info'
+											onClick={handleOpen}
+										>
+											<Link href={`/posts/${post._id}`}>
+												<a>Edit Post</a>
+											</Link>
+										</Button>
+
+										<Button
+											variant='contained'
+											size='large'
+											endIcon={<DeleteIcon />}
+											color='error'
+											onClick={() => handleDelete(post)}
+										>
+											Delete Post
+										</Button>
+									</ButtonGroup>
+								</Grid>
+							) : null}
+						</Grid>
 					</Grid>
-				</Grid>
+				</PostContainer>
 			)}
 		</>
 	);

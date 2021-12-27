@@ -8,7 +8,8 @@ import PostList from '@/components/PostList';
 import { styled } from '@mui/styles';
 
 const PostContainer = styled(Container)({
-	marginTop: '30px'
+	marginTop: '30px',
+	maxWidth: '100%'
 });
 
 export default function Dashboard() {
@@ -39,7 +40,7 @@ export default function Dashboard() {
 
 	return (
 		<>
-			<PostContainer>
+			<PostContainer justifyContent='center' sx={{width: '100%'}}>
 				<PostList posts={posts} user={user} page={page} />
 			</PostContainer>
 		</>

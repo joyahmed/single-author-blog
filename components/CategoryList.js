@@ -18,47 +18,59 @@ const CategoryList = ({ posts }) => {
 
 	return (
 		<>
-			<Grid
-				container
-				spacing={2}
-				sx={{
-					textAlign: 'center',
-					justifyContent: 'center',
-					alignItems: 'center'
-				}}
-			>
-				<Typography variant='h6' color='gray' sx={{ pb: 2, pt: 2 }}>
-					Categories
-				</Typography>
-			</Grid>
-			<Grid
-				container
-				spacing={2}
-				sx={{ textAlign: 'center', justifyContent: 'center', pb: 2 }}
-			>
-				{posts &&
-					getUniqueCategories(posts).map((category, index) => (
-						<>
-							<Grid
-								item
-								xs={12}
-								style={{ paddingLeft: 0 }}
-								key={index}
-							>
-								<Link
-									href='posts/category/[category]'
-									as={`posts/category/${category}`}
-								>
-									<a>
-										<Typography variant='h6' color='steelblue'>
-											{category}
-										</Typography>
-									</a>
-								</Link>
-							</Grid>
-						</>
-					))}
-			</Grid>
+			{posts && posts.length > 0 && (
+				<>
+					<Grid
+						container
+						spacing={2}
+						sx={{
+							textAlign: 'center',
+							justifyContent: 'center',
+							alignItems: 'center'
+						}}
+					>
+						<Typography
+							variant='body1'
+							color='gray'
+							sx={{ pb: 2, md: { pt: 20 } }}
+						>
+							Categories
+						</Typography>
+					</Grid>
+					<Grid
+						container
+						spacing={2}
+						sx={{
+							textAlign: 'center',
+							justifyContent: 'center',
+							pb: 2
+						}}
+					>
+						{posts &&
+							getUniqueCategories(posts).map((category, index) => (
+								<>
+									<Grid
+										item
+										xs={12}
+										style={{ paddingLeft: 0 }}
+										key={index}
+									>
+										<Link
+											href='posts/category/[category]'
+											as={`posts/category/${category}`}
+										>
+											<a>
+												<Typography variant='body2' color='steelblue'>
+													{category}
+												</Typography>
+											</a>
+										</Link>
+									</Grid>
+								</>
+							))}
+					</Grid>
+				</>
+			)}
 		</>
 	);
 };

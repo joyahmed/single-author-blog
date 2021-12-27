@@ -9,6 +9,11 @@ const theme = createTheme({
 	background: {
 		default: '#fff'
 	},
+	MuiContainer: {
+		root: {
+			maxWidth: '100vw'
+		}
+	},
 	// ...other code,
 	overrides: {
 		// ...

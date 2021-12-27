@@ -18,7 +18,8 @@ const TypeGrid = styled(Grid)({
 });
 
 const PostContainer = styled(Container)({
-	marginTop: '30px'
+	marginTop: '30px',
+	maxWidth: '100%'
 });
 
 export default function Dashboard() {
@@ -50,8 +51,6 @@ export default function Dashboard() {
 	const slug = encodeURI(kebabCase(title));
 
 	const page = 'admin';
-
-
 
 	useEffect(() => {
 		populatePosts();
@@ -135,7 +134,8 @@ export default function Dashboard() {
 			{posts && !loading ? (
 				<PostContainer>
 					{user &&
-						user[`${process.env.AUTH0_NAMESPACE}/roles`].includes(
+						user['https://rubas-blog.com/roles'] &&
+						user['https://rubas-blog.com/roles'].includes(
 							'admin'
 						) && (
 							<CreatePostForm

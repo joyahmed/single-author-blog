@@ -68,9 +68,10 @@ export default function CommentsComponent({ post, removeComment }) {
 							/>
 						</ListItem>
 						{user &&
-							user[`${process.env.AUTH0_NAMESPACE}/roles`].includes(
-								'admin'
-							) && (
+						user['https://rubas-blog.com/roles'] &&
+						user['https://rubas-blog.com/roles'].includes(
+							'admin'
+						) && (
 								<Box
 									sx={{
 										display: 'flex',

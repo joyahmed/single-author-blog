@@ -6,23 +6,12 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
-import Badge from '@mui/material/Badge';
-import Grid from '@mui/material/Grid';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import Link from 'next/link';
 import { useUser } from '@auth0/nextjs-auth0';
-import Image from 'next/image';
-import Tooltip from '@mui/material/Tooltip';
 import LogoutIcon from '@mui/icons-material/Logout';
-import LoginIcon from '@mui/icons-material/Login';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import PersonIcon from '@mui/icons-material/Person';
 import SettingsIcon from '@mui/icons-material/Settings';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -69,6 +58,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function NavBar() {
 	const { user, loading } = useUser();
+	//console.log(user);
 
 	const handleClick = event => {
 		setAnchorEl(event.currentTarget);
@@ -170,23 +160,23 @@ export default function NavBar() {
 			onClose={handleMobileMenuClose}
 		>
 			{user &&
-			user['https://joy-portfolio.com/roles'] &&
-			user['https://joy-portfolio.com/roles'].includes('admin') ? (
-				<MenuItem>
-					<Button
-						className='navItem'
-						variant='text'
-						size='large'
-						style={{ backgroundColor: 'transparent' }}
-					>
-						{/* eslint-disable-next-line */}
-						<a className='navLink' href='/dashboard'>
-							<SettingsIcon fontSize='small' />{' '}
-							<span style={{ paddingLeft: '10px' }}>Dashboard</span>
-						</a>
-					</Button>
-				</MenuItem>
-			) : null}
+				user['https://rubas-blog.com/roles'] &&
+				user['https://rubas-blog.com/roles'].includes('admin') && (
+					<MenuItem>
+						<Button
+							className='navItem'
+							variant='text'
+							size='large'
+							style={{ backgroundColor: 'transparent' }}
+						>
+							{/* eslint-disable-next-line */}
+							<a className='navLink' href='/dashboard'>
+								<SettingsIcon fontSize='small' />{' '}
+								<span style={{ paddingLeft: '10px' }}>Dashboard</span>
+							</a>
+						</Button>
+					</MenuItem>
+				)}
 			{user ? (
 				<MenuItem>
 					<Button
@@ -225,7 +215,7 @@ export default function NavBar() {
 
 	return (
 		// #region main menu render
-		<Box sx={{ flexGrow: 1 }}>
+		<Box sx={{ flexGrow: 0 }}>
 			<AppBar
 				position='static'
 				style={{
@@ -255,8 +245,8 @@ export default function NavBar() {
 						}}
 					>
 						{user &&
-							user['https://joy-portfolio.com/roles'] &&
-							user['https://joy-portfolio.com/roles'].includes(
+							user['https://rubas-blog.com/roles'] &&
+							user['https://rubas-blog.com/roles'].includes(
 								'admin'
 							) && (
 								<Link href='/dashboard'>
@@ -265,8 +255,8 @@ export default function NavBar() {
 											sx={{
 												display: {
 													xs: 'none',
-													sm: 'block',
-													marginRight: 4 + 'px'
+													sm: 'block'
+													// marginRight: 4 + 'px'
 												}
 											}}
 										>
@@ -293,11 +283,11 @@ export default function NavBar() {
 									sx={{
 										display: {
 											xs: 'none',
-											sm: 'block',
-											minWidth: 100
+											sm: 'block'
+											// minWidth: 100
 										}
 									}}
-									style={{ marginLeft: '10px', marginRight: '-50px' }}
+									style={{ marginLeft: '10px', marginRight: '-5px' }}
 								>
 									<UserImage src={user.picture} alt={user.name} />
 								</Typography>
@@ -305,8 +295,8 @@ export default function NavBar() {
 									sx={{
 										display: {
 											xs: 'none',
-											sm: 'block',
-											minWidth: 100
+											sm: 'block'
+											//minWidth: 100
 										}
 									}}
 								>

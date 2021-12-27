@@ -4,7 +4,7 @@ import HomeBody from '@/components/HomeBody';
 
 export default function Home() {
 	return (
-		<div className={styles.container}>
+		<div>
 			<Head>
 				<title>{" Ruba's "} Blog</title>
 				<meta
@@ -13,9 +13,8 @@ export default function Home() {
 				/>
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
-			<main className={styles.main}>
-				<HomeBody />
-			</main>
+
+			<HomeBody />
 		</div>
 	);
 }

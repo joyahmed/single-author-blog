@@ -6,6 +6,12 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Image from 'next/image';
 import PublicPage from '@/components/PublicPage';
+import { styled } from '@mui/styles';
+
+const PostContainer = styled(Container)({
+	marginTop: '30px',
+	maxWidth: '100%'
+});
 
 const useStyles = makeStyles(theme => ({
 	hero: {
@@ -38,7 +44,8 @@ const useStyles = makeStyles(theme => ({
 		display: 'flex',
 		margin: '0 10px',
 		justifyContent: 'space-between'
-	}
+	},
+	container: { widht: '100%' }
 	/* 	author: {
 		display: 'flex'
 	},
@@ -52,7 +59,12 @@ const HomeBody = () => {
 	const classes = useStyles();
 	return (
 		<>
-			<Grid container sx={{ height: '100%' }}>
+			<Grid
+				container
+				sx={{ height: '100%', width: '100%', p: 0 }}
+				style={{ width: '100%' }}
+				width='100vw'
+			>
 				<Grid item xs={12} md={6} order={{ xs: 2, md: 1 }}>
 					<Box>
 						{/* 						<Image
@@ -78,7 +90,10 @@ const HomeBody = () => {
 						padding: { xs: 5 }
 					}}
 				>
-					<Grid container>
+					<Grid
+						container
+						sx={{ height: '100%', width: '100%', p: 0 }}
+					>
 						<Grid item xs={12}>
 							{/* eslint-disable-next-line */}
 							<Typography variant='h4' color='gray'>
@@ -94,11 +109,10 @@ const HomeBody = () => {
 					</Grid>
 				</Grid>
 			</Grid>
-			<Container maxWidth='lg'>
-				<Grid container>
-					<PublicPage />
-				</Grid>
-			</Container>
+
+			<PostContainer>
+				<PublicPage />
+			</PostContainer>
 		</>
 	);
 };

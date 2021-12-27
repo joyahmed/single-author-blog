@@ -18,7 +18,9 @@ const TypeGrid = styled(Grid)({
 });
 
 const PostContainer = styled(Container)({
-	marginTop: '30px'
+	display: 'flex',
+	marginTop: '30px',
+	maxWidth: '80%'
 });
 
 const EditPost = () => {
@@ -294,17 +296,33 @@ const EditPost = () => {
 					/>
 				</PostContainer>
 			) : (
-				<Grid
-					container
-					sx={{ height: 100 + 'vh' }}
-					alignItems='center'
-					justifyContent='center'
+				<PostContainer
+					sx={{
+						display: 'flex',
+						height: 100 + 'vh',
+						width: 100 + 'wh',
+						alignItems: 'center',
+						justifyContent: 'center'
+					}}
 				>
 					<CircularProgress
-						sx={{ color: 'steelblue', height: 3 + 'em' }}
+						sx={{ color: 'steelblue', height: 1 - +'em' }}
 					/>
-				</Grid>
+				</PostContainer>
 			)}
+			{/* <PostContainer
+				sx={{
+					display: 'flex',
+					height: 100 + 'vh',
+					width: 100 + 'wh',
+					alignItems: 'center',
+					justifyContent: 'center'
+				}}
+			>
+				<CircularProgress
+					sx={{ color: 'steelblue', height: 10 + 'em' }}
+				/>
+			</PostContainer> */}
 		</>
 	);
 };
