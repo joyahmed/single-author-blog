@@ -11,6 +11,6 @@ module.exports = {
 	},
 	env: {
 		AUTH0_NAMESPACE: process.env.AUTH0_NAMESPACE,
-		CLOUDINARY_NAME: process.env.CLOUDINARY_NAME
+		CLOUDINARY_NAME: process.env.CLOUDINARY_NAME,
 	}
 };
