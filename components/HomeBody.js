@@ -92,20 +92,26 @@ const HomeBody = () => {
 				>
 					<Grid
 						container
-						sx={{ height: '100%', width: '100%', p: 0 }}
+						sx={{
+							display: 'flex',
+							alignItems: 'center',
+							justifyContent: 'center',
+							height: '100%',
+							p: 0
+						}}
 					>
-						<Grid item xs={12}>
-							{/* eslint-disable-next-line */}
-							<Typography variant='h4' color='gray'>
-								Ruba's Blog {/* eslint-disable-line */}
-							</Typography>
-						</Grid>
-						<Grid item xs={12}>
-							{/* 							<Typography variant='subtitle1'>
+						{/* <Grid item xs={12}> */}
+						{/* eslint-disable-next-line */}
+						<Typography variant='h4' color='gray'>
+							Ruba's Blog {/* eslint-disable-line */}
+						</Typography>
+						{/* </Grid> */}
+						{/* <Grid item xs={12}>
+														<Typography variant='subtitle1'>
 								Contrary to popular belief, Lorem Ipsum is not simply
 								random text.
-							</Typography> */}
-						</Grid>
+							</Typography>
+						</Grid> */}
 					</Grid>
 				</Grid>
 			</Grid>
