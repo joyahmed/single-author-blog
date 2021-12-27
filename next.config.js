@@ -11,6 +11,8 @@ module.exports = {
 	},
 	env: {
 		AUTH0_NAMESPACE: process.env.AUTH0_NAMESPACE,
-		CLOUDINARY_NAME: process.env.CLOUDINARY_NAME
+		CLOUDINARY_NAME: process.env.CLOUDINARY_NAME,
+		API_URL:
+			process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
 	}
 };
